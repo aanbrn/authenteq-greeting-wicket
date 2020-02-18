@@ -1,0 +1,67 @@
+---
+apiVersion: v1
+kind: Namespace
+metadata:
+  name: authenteq-greeting-wicket
+
+---
+apiVersion: rbac.authorization.k8s.io/v1
+kind: ClusterRoleBinding
+metadata:
+  name: authenteq-greeting-wicket:default
+roleRef:
+  apiGroup: rbac.authorization.k8s.io
+  kind: ClusterRole
+  name: view
+subjects:
+  - kind: ServiceAccount
+    name: default
+    namespace: authenteq-greeting-wicket
+
+---
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  name: authenteq-greeting-wicket
+  namespace: authenteq-greeting-wicket
+data:
+  application.yaml: |
+    authenteq:
+      greeting:
+        name: Kubernetes
+
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    app: authenteq-greeting-wicket
+  name: authenteq-greeting-wicket
+  namespace: authenteq-greeting-wicket
+spec:
+  selector:
+    matchLabels:
+      app: authenteq-greeting-wicket
+  template:
+    metadata:
+      labels:
+        app: authenteq-greeting-wicket
+    spec:
+      containers:
+        - image: docker.authenteq.com/authenteq-greeting-wicket:0.1.0-SNAPSHOT
+          name: authenteq-greeting-wicket
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    app: authenteq-greeting-wicket
+  name: authenteq-greeting-wicket
+  namespace: authenteq-greeting-wicket
+spec:
+  selector:
+    app: authenteq-greeting-wicket
+  type: LoadBalancer
+  ports:
+    - port: 8080

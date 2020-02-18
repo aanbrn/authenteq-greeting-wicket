@@ -1,0 +1,30 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<html xmlns:wicket="http://wicket.apache.org" xmlns="http://www.w3.org/1999/xhtml">
+<head>
+    <meta charset="utf-8"/>
+    <title>Greeting Wicket Application</title>
+</head>
+<body class="container">
+<h1>
+    <wicket:message key="signIn">[Sign In]</wicket:message>
+</h1>
+<div class="panel center-block">
+    <div class="panel-body">
+        <form wicket:id="signIn">
+            <div wicket:id="feedback"></div>
+            <div class="form-group">
+                <label wicket:id="usernameLabel" for="username">[Username]</label>
+                <input wicket:id="username" id="username" type="text" class="form-control">
+            </div>
+            <div class="form-group">
+                <label wicket:id="passwordLabel" for="password">[Password]</label>
+                <input wicket:id="password" id="password" type="password" class="form-control">
+            </div>
+            <button wicket:id="signIn" type="submit" class="btn btn-primary">
+                <wicket:message key="signIn">[Sign In]</wicket:message>
+            </button>
+        </form>
+    </div>
+</div>
+</body>
+</html>
